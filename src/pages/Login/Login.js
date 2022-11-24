@@ -14,7 +14,6 @@ function Login() {
   const [message, setMessage] = useState({ show: false, text: '', status: '' });
 
   const navigate = useNavigate();
-
   async function makeLogin() {
     const validateEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     // ^ Regex extraído da seguinte fonte: https://stackoverflow.com/questions/46155/how-can-i-validate-an-email-address-in-javascript
@@ -23,7 +22,6 @@ function Login() {
       if (password.length < 8 || password === password.toLowerCase()) {
         return false;
       }
-
       return true;
     }
 
@@ -55,9 +53,9 @@ function Login() {
   }
 
   return (
-    <main>
+    <main data-testid='login-dtTest'>
       { message.show &&
-        <Message addClass={message.status}>
+        <Message addClass={message.status} data-testid='login-message'>
           {message.text}
         </Message>
       }
@@ -69,6 +67,7 @@ function Login() {
             id='email'
             name='email'
             type='text'
+            data-testid='login-email'
             onChange={(e) => handleChange(e, setLoginInformation)}
           />
         </label>
@@ -79,10 +78,12 @@ function Login() {
             id='password'
             name='password'
             type='password'
+            data-testid='login-password'
             onChange={(e) => handleChange(e, setLoginInformation)}
           />
         </label>
         <Button
+        data-testid='login-btn'
           addClassName='form-button'
           onClickFunction={makeLogin}
         >
