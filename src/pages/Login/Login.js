@@ -14,6 +14,7 @@ function Login() {
   const [message, setMessage] = useState({ show: false, text: '', status: '' });
 
   const navigate = useNavigate();
+
   async function makeLogin() {
     const validateEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     // ^ Regex extraído da seguinte fonte: https://stackoverflow.com/questions/46155/how-can-i-validate-an-email-address-in-javascript
@@ -21,7 +22,12 @@ function Login() {
     function validatePassword(password) {
       if (password.length < 8 || password === password.toLowerCase()) {
         return false;
+      }else {
+        localStorage.setItem('user', JSON.stringify({'email': loginInformation.email, 'password': loginInformation.password}));
+        localStorage.setItem('token', JSON.stringify("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"));
+        navigate('/');
       }
+
       return true;
     }
 
@@ -37,25 +43,25 @@ function Login() {
       body: JSON.stringify(loginInformation)
     }
 
-    const { 
-      user,
-      message: apiMessage,
-      token
-    } = await fetchApi('https://odonteo-backend.herokuapp.com/login', options);
+  //   const { 
+  //     user,
+  //     message: apiMessage,
+  //     token
+  //   } = await fetchApi('https://odonteo-backend.herokuapp.com/login', options);
     
-    if (apiMessage === 'Login efetuado com sucesso!') {
-      localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('token', JSON.stringify(token));
-      navigate('/');
-    } else {
-      showMessage(setMessage, apiMessage, 'error');
-    }
+  //   if (apiMessage === 'Login efetuado com sucesso!') {
+  //     localStorage.setItem('user', JSON.stringify(user));
+  //     localStorage.setItem('token', JSON.stringify(token));
+  //     navigate('/');
+  //   } else {
+  //     showMessage(setMessage, apiMessage, 'error');
+  //   }
   }
 
   return (
-    <main data-testid='login-dtTest'>
+    <main data-testid='login-test-id'>
       { message.show &&
-        <Message addClass={message.status} data-testid='login-message'>
+        <Message addClass={message.status}>
           {message.text}
         </Message>
       }
@@ -67,7 +73,7 @@ function Login() {
             id='email'
             name='email'
             type='text'
-            data-testid='login-email'
+            data-testid='email-id'
             onChange={(e) => handleChange(e, setLoginInformation)}
           />
         </label>
@@ -78,14 +84,14 @@ function Login() {
             id='password'
             name='password'
             type='password'
-            data-testid='login-password'
+            data-testid='password-id'
             onChange={(e) => handleChange(e, setLoginInformation)}
           />
         </label>
         <Button
-        data-testid='login-btn'
           addClassName='form-button'
           onClickFunction={makeLogin}
+          testId='login-button-id'
         >
           Entrar
         </Button>

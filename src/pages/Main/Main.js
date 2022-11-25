@@ -93,7 +93,7 @@ function Main() {
   }
 
   return (
-    <main>
+    <main data-testid='main-test-id'>
       { message.show &&
         <Message addClass={message.status}>
           {message.text}
@@ -104,6 +104,7 @@ function Main() {
           Quantia a receber:
           <input
             id='amount'
+            data-testid='amount-id'
             className='form-input'
             name='paymentAmount'
             type='number'
@@ -115,6 +116,7 @@ function Main() {
           Número de parcelas:
           <input
             id='installments'
+            data-testid='installments-id'
             className='form-input'
             name='numberOfInstallments'
             type='number'
@@ -126,6 +128,7 @@ function Main() {
           Dia do mês para cobrança:
           <input
             id='billing-day'
+            data-testid='billing-day-id'
             className='form-input'
             name='billingDay'
             type='number'
@@ -138,6 +141,7 @@ function Main() {
           Data da primeira parcela:
           <input
             id='first-installment-date'
+            data-testid='first-installment-date-id'
             className='form-input date'
             name='firstInstallmentDate'
             type='date'
@@ -149,6 +153,7 @@ function Main() {
           id='register-button'
           onClickFunction={register}
           addClassName='form-button'
+          testId='register-button-id'
         >
           Registrar cobrança
         </Button>
@@ -156,6 +161,7 @@ function Main() {
       <Button
         id='go-to-statement-button'
         onClickFunction={() => navigate('/statement')}
+        testId='statement-button-id'
       >
         Ver extrato
       </Button>
